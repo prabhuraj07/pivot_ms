@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from api.utils import get_dataframe
+import logging
 
 # Create your views here.
 pd.set_option('display.float_format', lambda x: '%.2f' % x)
@@ -58,4 +59,5 @@ class Pivot(APIView):
                 
         except Exception as e:
             print(e)
+            logging.error(e)
             return Response({"error":"Invalid Request"}, status=status.HTTP_400_BAD_REQUEST)

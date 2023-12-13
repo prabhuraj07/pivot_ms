@@ -2,8 +2,12 @@ import pandas as pd
 import redis
 import io
 
-EXCEL_FILE = "sample_file.xlsx"
-r = redis.Redis(host='localhost', port=6379, db=0)
+EXCEL_FILE = "./api/sample_file.xlsx"
+# r = redis.Redis(host='redis://127.0.0.1:6379/1', port=6379, db=0)
+
+# Connect to Redis using the URL
+# redis_url = "redis://127.0.0.1:6379/0"
+r = redis.StrictRedis(host='redis', port=6379, db=0)
 
 def get_dataframe():
     """

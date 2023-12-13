@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  django:
+    build:
+      context: ./dataverse_pivot  # Path to the directory containing the Django Dockerfile and source code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    environment:
+      - DJANGO_DB_HOST=db
+      - REDIS_URL=redis://redis:6379/0
+    networks:
+      - backend-network
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    networks:
+      - backend-network
+
+  react:
+    build:
+      context: ./frontend  # Path to the directory containing the React Dockerfile and source code
+    ports:
+      - "3000:3000"
+    depends_on:
+      - django
+    networks:
+      - frontend-network
+
+networks:
+  backend-network:
+  frontend-network:
